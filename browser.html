@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeHalo Browser</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/lehalo-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/lehalo-icon.png">
+    <link rel="apple-touch-icon" href="/assets/lehalo-icon.png">
+    <link rel="shortcut icon" href="/assets/lehalo-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/ui/styles.css">
+    <link rel="stylesheet" href="/ui/browser.css">
+</head>
+<body class="browser-body">
+    <!-- Top Bar -->
+    <div class="browser-topbar">
+        <div class="browser-brand">
+            <img src="/assets/lehalo-logo.png" alt="LeHalo" class="browser-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+            <span class="browser-logo-text" style="display:none;">LeHalo</span>
+        </div>
+        <div class="browser-controls">
+            <button class="browser-btn" id="btn-back" title="Back (Alt+Left)">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+            <button class="browser-btn" id="btn-forward" title="Forward (Alt+Right)">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+            <button class="browser-btn" id="btn-refresh" title="Refresh (F5)">
+                <i class="fas fa-redo"></i>
+            </button>
+            <button class="browser-btn" id="btn-home" title="Home">
+                <i class="fas fa-home"></i>
+            </button>
+        </div>
+        
+        <div class="browser-address-bar-container">
+            <div class="browser-address-bar">
+                <i class="fas fa-lock address-icon" id="address-icon"></i>
+                <input type="text" id="address-input" class="address-input" placeholder="Enter URL or search..." autocomplete="off">
+                <button class="address-btn" id="btn-go" title="Go">
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="browser-actions">
+            <button class="browser-btn" id="btn-bookmark" title="Bookmark (Ctrl+D)">
+                <i class="far fa-star"></i>
+            </button>
+            <button class="browser-btn" id="btn-history" title="History (Ctrl+H)">
+                <i class="fas fa-history"></i>
+            </button>
+            <button class="browser-btn" id="btn-settings" title="Settings">
+                <i class="fas fa-cog"></i>
+            </button>
+            <button class="browser-btn" id="btn-sidebar" title="Toggle Sidebar (Ctrl+B)">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Tab Bar -->
+    <div class="browser-tabbar">
+        <div class="tabs-container" id="tabs-container">
+            <!-- Tabs will be dynamically added here -->
+        </div>
+        <button class="tab-new-btn" id="btn-new-tab" title="New Tab (Ctrl+T)">
+            <i class="fas fa-plus"></i>
+        </button>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="browser-content" id="browser-content">
+        <!-- Tab iframes will be dynamically added here -->
+    </div>
+
+    <!-- Sidebar -->
+    <div class="browser-sidebar" id="browser-sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-brand">
+                <img src="/assets/lehalo-logo.png" alt="LeHalo" class="sidebar-logo" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <span class="sidebar-logo-text" style="display:none;">LeHalo</span>
+            </div>
+            <button class="sidebar-close" id="btn-sidebar-close">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="sidebar-tabs">
+            <button class="sidebar-tab active" data-panel="bookmarks">
+                <i class="fas fa-star"></i> Bookmarks
+            </button>
+            <button class="sidebar-tab" data-panel="history">
+                <i class="fas fa-history"></i> History
+            </button>
+            <button class="sidebar-tab" data-panel="settings">
+                <i class="fas fa-cog"></i> Settings
+            </button>
+        </div>
+        <div class="sidebar-content">
+            <div class="sidebar-panel active" id="panel-bookmarks">
+                <div class="panel-header">
+                    <h4>Bookmarks</h4>
+                    <button class="panel-btn" id="btn-add-bookmark">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="bookmarks-list" id="bookmarks-list">
+                    <!-- Bookmarks will be added here -->
+                </div>
+            </div>
+            <div class="sidebar-panel" id="panel-history">
+                <div class="panel-header">
+                    <h4>History</h4>
+                    <button class="panel-btn" id="btn-clear-history">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+                <div class="history-list" id="history-list">
+                    <!-- History will be added here -->
+                </div>
+            </div>
+            <div class="sidebar-panel" id="panel-settings">
+                <div class="panel-header">
+                    <h4>Settings</h4>
+                </div>
+                <div class="settings-content">
+                    <div class="setting-item">
+                        <label>Default Proxy Service</label>
+                        <select id="setting-proxy-service">
+                            <option value="light">HaloLight (Recommended)</option>
+                            <option value="shell">HaloShell</option>
+                            <option value="link">HaloLink</option>
+                            <option value="mux">HaloMux</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="setting-tab-cloaking"> Enable Tab Cloaking
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="setting-save-tabs"> Save Tabs on Close
+                        </label>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="setting-ad-block"> Enable Ad Blocking
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settings-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Settings</h3>
+                <button class="modal-close" id="btn-modal-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Settings content -->
+            </div>
+        </div>
+    </div>
+
+    <script src="/ui/browser.js"></script>
+</body>
+</html>
+

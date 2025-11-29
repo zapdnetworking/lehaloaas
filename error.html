@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Error — LeHalo</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/lehalo-icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/lehalo-icon.png">
+    <link rel="apple-touch-icon" href="/assets/lehalo-icon.png">
+    <link rel="shortcut icon" href="/assets/lehalo-icon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/ui/styles.css">
+    <style>
+        .error-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        .error-content {
+            max-width: 600px;
+        }
+        .error-icon {
+            font-size: 5rem;
+            color: var(--accent-primary);
+            margin-bottom: 2rem;
+            text-shadow: 0 0 20px var(--shadow-glow);
+        }
+        .error-title {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+        }
+        .error-message {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+        .error-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--accent-primary);
+            color: var(--bg-primary);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        .error-button:hover {
+            background: var(--accent-highlight);
+            box-shadow: 0 0 20px var(--shadow-glow-strong);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-content">
+            <i class="fas fa-exclamation-triangle error-icon"></i>
+            <h1 class="error-title">Oops! Something went wrong</h1>
+            <p class="error-message">
+                We encountered an error while processing your request. 
+                Please try again or return to the homepage.
+            </p>
+            <a href="/" class="error-button">
+                <i class="fas fa-home"></i> Return Home
+            </a>
+        </div>
+    </div>
+</body>
+</html>
+
