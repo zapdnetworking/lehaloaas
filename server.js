@@ -14,12 +14,12 @@ import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
 import { readFileSync } from 'fs';
 
-import { createHaloLight } from './services/halo-light.js';
-import { createHaloShell } from './services/halo-shell.js';
-import { createHaloWisp } from './services/halo-wisp.js';
-import { createHaloLink } from './services/halo-link.js';
-import { createHaloMux } from './services/halo-mux.js';
-import { setupRoutes } from './routes/index.js';
+import { createHaloLight } from './halo-light.js';
+import { createHaloShell } from './halo-shell.js';
+import { createHaloWisp } from './halo-wisp.js';
+import { createHaloLink } from './halo-link.js';
+import { createHaloMux } from './halo-mux.js';
+import { setupRoutes } from './index.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -68,41 +68,18 @@ const init = async () => {
       }
     });
 
-    // Register static file serving for UI
+    // Register static file serving for UI and assets
+    // Map `/ui/*` and `/assets/*` to files in the repository root so the frontend
+    // can reference `/ui/...` and `/assets/...` paths without requiring a separate directory tree.
     await fastify.register(fastifyStatic, {
-      root: join(__dirname, 'ui'),
+      root: join(__dirname),
       prefix: '/ui/'
     });
 
-    // Serve assets using readFileSync to avoid decorator conflict
-    fastify.get('/assets/*', async (request, reply) => {
-      try {
-        const filePath = join(__dirname, 'assets', request.url.replace('/assets/', ''));
-        const fileContent = readFileSync(filePath);
-        const ext = filePath.split('.').pop().toLowerCase();
-        let contentType = 'application/octet-stream';
-        
-        // Comprehensive MIME type mapping
-        switch (ext) {
-          case 'png': contentType = 'image/png'; break;
-          case 'jpg':
-          case 'jpeg': contentType = 'image/jpeg'; break;
-          case 'gif': contentType = 'image/gif'; break;
-          case 'svg': contentType = 'image/svg+xml'; break;
-          case 'ico': contentType = 'image/x-icon'; break;
-          case 'webp': contentType = 'image/webp'; break;
-          case 'json': contentType = 'application/json'; break;
-          case 'js': contentType = 'application/javascript'; break;
-          case 'css': contentType = 'text/css'; break;
-          case 'html': contentType = 'text/html'; break;
-        }
-        
-        reply.type(contentType);
-        return reply.send(fileContent);
-      } catch (error) {
-        fastify.log.warn(`Asset not found: ${request.url}`);
-        return reply.status(404).send({ error: 'File not found' });
-      }
+    await fastify.register(fastifyStatic, {
+      root: join(__dirname, 'assets'),
+      prefix: '/assets/',
+      decorateReply: false
     });
 
     // Initialize proxy services

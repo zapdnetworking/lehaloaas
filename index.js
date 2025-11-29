@@ -13,7 +13,8 @@ import { dirname, join } from 'path';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-const rootDir = dirname(__dirname);
+// rootDir should point to the repository root (this directory)
+const rootDir = __dirname;
 
 /**
  * Setup all routes for LeHalo server
@@ -23,14 +24,14 @@ const rootDir = dirname(__dirname);
 export function setupRoutes(fastify, services) {
   // Homepage
   fastify.get('/', async (request, reply) => {
-    const html = readFileSync(join(rootDir, 'ui', 'index.html'), 'utf-8');
+    const html = readFileSync(join(rootDir, 'index.html'), 'utf-8');
     reply.type('text/html').send(html);
   });
 
   // Browser page (tabbed interface)
   fastify.get('/browser', async (request, reply) => {
     try {
-      const html = readFileSync(join(rootDir, 'ui', 'browser.html'), 'utf-8');
+      const html = readFileSync(join(rootDir, 'browser.html'), 'utf-8');
       return reply.type('text/html').send(html);
     } catch (error) {
       fastify.log.error(error);
@@ -188,7 +189,7 @@ export function setupRoutes(fastify, services) {
 
   // Error page
   fastify.get('/error', async (request, reply) => {
-    const html = readFileSync(join(rootDir, 'ui', 'error.html'), 'utf-8');
+    const html = readFileSync(join(rootDir, 'error.html'), 'utf-8');
     reply.type('text/html').send(html);
   });
 
